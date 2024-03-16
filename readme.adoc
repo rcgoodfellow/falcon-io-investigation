@@ -1,0 +1,94 @@
+= Falcon VM backing tests
+
+We've observed very poor performance in Falcon VMs with heavy I/O workloads.
+This is an effort to figure out what's going on. The poor performance not only
+includes slow I/O but VMs seem to lock up entirely for periods of seconds to
+minutes.
+
+The poor performance has been observed in topologies where there are 4 VMs
+running I/O heavy workloads.
+
+== Topology under test
+
+All of the tests here have the same topology.
+
+- 4 virtual machines
+- 100G virtual disks
+
+== Test 1: Zvol backing versus regular files
+
+In this test we run the following `fio` tests within all 4 VMs simultaneously.
+
+4kB blocks
+
+----
+fio \
+  --name=random-write \
+  --ioengine=posixaio \
+  --rw=randwrite \
+  --bs=4k \
+  --numjobs=4 \
+  --size=4g \
+  --runtime=60 \
+  --time_based \
+  --iodepth=8 \
+  --end_fsync=1
+----
+
+512B blocks
+
+----
+fio \
+  --name=random-write \
+  --ioengine=posixaio \
+  --rw=randwrite \
+  --bs=512 \
+  --numjobs=4 \
+  --size=4g \
+  --runtime=60 \
+  --time_based \
+  --iodepth=8 \
+  --end_fsync=1
+----
+
+The results are in `results/test1/<node-name>`. To get a sense for load on the
+host we run `w` on the host right after the test is complete, that result is in
+`results/test1/host`.
+
+=== Result summary
+
+==== Zvol
+
+4k block bandwidth
+
+- a: 4891 KiB/s
+- b: 4922 KiB/s
+- c: 4861 KiB/s
+- d: 4854 KiB/s
+- host load average: 7.12, 3.37, 2.19
+
+512 block bandwidth 
+
+- a: 655 KiB/s
+- b: 700 KiB/s
+- c: 890 KiB/s
+- d: 857 KiB/s
+- host load average: 6.24, 2.47, 1.77
+
+==== File
+
+4k block bandwidth
+
+- a: 24.7 MiB/s
+- b: 24.8 MiB/s
+- c: 25.0 MiB/s
+- d: 25.3 MiB/s
+- host load average: 13.07, 6.75, 4.05
+
+512 block bandwidth 
+
+- a: 3240 KiB/s
+- b: 3235 KiB/s
+- c: 3243 KiB/s
+- d: 3241 KiB/s
+- host load average: 11.30, 5.73, 3.27
