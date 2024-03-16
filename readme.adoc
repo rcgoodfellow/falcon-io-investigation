@@ -17,6 +17,16 @@ All of the tests here have the same topology.
 
 == Test 1: Zvol backing versus regular files
 
+This test evaluates creating a backing block device by cloning a zvol snapshot
+versus copying a zvol snapshot into a regular file.
+
+When a cloned snapshot is used, the backing device is the corresponding
+`/dev/zvol/(r)dsk`. There were only small differences between `rdsk` and `dsk`,
+surprisingly with `dsk` coming out a bit better, so `dsk` was used for these
+benchmarks. 
+
+When a file is used, the backing snapshot is copied into the backing file with `dd`.
+
 In this test we run the following `fio` tests within all 4 VMs simultaneously.
 
 4kB blocks
