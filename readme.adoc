@@ -15,53 +15,6 @@ All of the tests here have the same topology.
 - 4 virtual machines
 - 100G virtual disks using `virtio-block`
 
-When falcon sets up a guest zvol it looks like this
-
-<details>
-<pre>
-$ zfs get all apool/falcon/topo/fback/a
-NAME                       PROPERTY              VALUE                             SOURCE
-apool/falcon/topo/fback/a  type                  volume                            -
-apool/falcon/topo/fback/a  creation              Sat Mar 16 12:48 2024             -
-apool/falcon/topo/fback/a  used                  56K                               -
-apool/falcon/topo/fback/a  available             1.64T                             -
-apool/falcon/topo/fback/a  referenced            4.23G                             -
-apool/falcon/topo/fback/a  compressratio         1.00x                             -
-apool/falcon/topo/fback/a  origin                apool/falcon/img/helios-2.0@base  -
-apool/falcon/topo/fback/a  reservation           20G                               local
-apool/falcon/topo/fback/a  volsize               20G                               local
-apool/falcon/topo/fback/a  volblocksize          4K                                -
-apool/falcon/topo/fback/a  checksum              on                                default
-apool/falcon/topo/fback/a  compression           off                               default
-apool/falcon/topo/fback/a  readonly              off                               default
-apool/falcon/topo/fback/a  createtxg             48310                             -
-apool/falcon/topo/fback/a  copies                1                                 default
-apool/falcon/topo/fback/a  refreservation        none                              default
-apool/falcon/topo/fback/a  guid                  15380078609976307608              -
-apool/falcon/topo/fback/a  primarycache          all                               default
-apool/falcon/topo/fback/a  secondarycache        all                               default
-apool/falcon/topo/fback/a  usedbysnapshots       0B                                -
-apool/falcon/topo/fback/a  usedbydataset         56K                               -
-apool/falcon/topo/fback/a  usedbychildren        0B                                -
-apool/falcon/topo/fback/a  usedbyrefreservation  0B                                -
-apool/falcon/topo/fback/a  logbias               latency                           default
-apool/falcon/topo/fback/a  dedup                 off                               default
-apool/falcon/topo/fback/a  mlslabel              none                              default
-apool/falcon/topo/fback/a  sync                  standard                          default
-apool/falcon/topo/fback/a  refcompressratio      1.00x                             -
-apool/falcon/topo/fback/a  written               56K                               -
-apool/falcon/topo/fback/a  logicalused           28K                               -
-apool/falcon/topo/fback/a  logicalreferenced     4.22G                             -
-apool/falcon/topo/fback/a  snapshot_limit        none                              default
-apool/falcon/topo/fback/a  snapshot_count        none                              default
-apool/falcon/topo/fback/a  redundant_metadata    all                               default
-apool/falcon/topo/fback/a  encryption            off                               default
-apool/falcon/topo/fback/a  keylocation           none                              default
-apool/falcon/topo/fback/a  keyformat             none                              default
-apool/falcon/topo/fback/a  pbkdf2iters           0                                 default
-</pre>
-</details>
-
 == Test 1: Zvol backing versus regular files
 
 This test evaluates creating a backing block device by cloning a zvol snapshot
@@ -201,3 +154,52 @@ host load average: 13.07, 6.75, 4.05
 |===
 
 host load average: 11.30, 5.73, 3.27
+
+== Details
+
+=== Zvol setup
+
+When falcon sets up a zvol clone to back a VM, it looks like this
+
+----
+$ zfs get all apool/falcon/topo/fback/a
+NAME                       PROPERTY              VALUE                             SOURCE
+apool/falcon/topo/fback/a  type                  volume                            -
+apool/falcon/topo/fback/a  creation              Sat Mar 16 12:48 2024             -
+apool/falcon/topo/fback/a  used                  56K                               -
+apool/falcon/topo/fback/a  available             1.64T                             -
+apool/falcon/topo/fback/a  referenced            4.23G                             -
+apool/falcon/topo/fback/a  compressratio         1.00x                             -
+apool/falcon/topo/fback/a  origin                apool/falcon/img/helios-2.0@base  -
+apool/falcon/topo/fback/a  reservation           20G                               local
+apool/falcon/topo/fback/a  volsize               20G                               local
+apool/falcon/topo/fback/a  volblocksize          4K                                -
+apool/falcon/topo/fback/a  checksum              on                                default
+apool/falcon/topo/fback/a  compression           off                               default
+apool/falcon/topo/fback/a  readonly              off                               default
+apool/falcon/topo/fback/a  createtxg             48310                             -
+apool/falcon/topo/fback/a  copies                1                                 default
+apool/falcon/topo/fback/a  refreservation        none                              default
+apool/falcon/topo/fback/a  guid                  15380078609976307608              -
+apool/falcon/topo/fback/a  primarycache          all                               default
+apool/falcon/topo/fback/a  secondarycache        all                               default
+apool/falcon/topo/fback/a  usedbysnapshots       0B                                -
+apool/falcon/topo/fback/a  usedbydataset         56K                               -
+apool/falcon/topo/fback/a  usedbychildren        0B                                -
+apool/falcon/topo/fback/a  usedbyrefreservation  0B                                -
+apool/falcon/topo/fback/a  logbias               latency                           default
+apool/falcon/topo/fback/a  dedup                 off                               default
+apool/falcon/topo/fback/a  mlslabel              none                              default
+apool/falcon/topo/fback/a  sync                  standard                          default
+apool/falcon/topo/fback/a  refcompressratio      1.00x                             -
+apool/falcon/topo/fback/a  written               56K                               -
+apool/falcon/topo/fback/a  logicalused           28K                               -
+apool/falcon/topo/fback/a  logicalreferenced     4.22G                             -
+apool/falcon/topo/fback/a  snapshot_limit        none                              default
+apool/falcon/topo/fback/a  snapshot_count        none                              default
+apool/falcon/topo/fback/a  redundant_metadata    all                               default
+apool/falcon/topo/fback/a  encryption            off                               default
+apool/falcon/topo/fback/a  keylocation           none                              default
+apool/falcon/topo/fback/a  keyformat             none                              default
+apool/falcon/topo/fback/a  pbkdf2iters           0                                 default
+----
