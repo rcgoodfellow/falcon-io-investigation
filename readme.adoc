@@ -61,34 +61,86 @@ host we run `w` on the host right after the test is complete, that result is in
 
 4k block bandwidth
 
-- a: 4891 KiB/s
-- b: 4922 KiB/s
-- c: 4861 KiB/s
-- d: 4854 KiB/s
-- host load average: 7.12, 3.37, 2.19
+[cols="1,1"]
+|===
+|Node | Bandwidth
+
+|a
+|4891 KiB/s
+
+|b
+|4922 KiB/s
+
+|c
+|4861 KiB/s
+
+|d
+| 4854 KiB/s
+|===
+
+host load average: 7.12, 3.37, 2.19
 
 512 block bandwidth 
 
-- a: 655 KiB/s
-- b: 700 KiB/s
-- c: 890 KiB/s
-- d: 857 KiB/s
-- host load average: 6.24, 2.47, 1.77
+[cols="1,1"]
+|===
+|Node | Bandwidth
+
+|a
+|655 KiB/s
+
+|b
+|700 KiB/s
+
+|c
+|890 KiB/s
+
+|d
+|857 KiB/s
+|===
+
+host load average: 6.24, 2.47, 1.77
 
 ==== File
 
 4k block bandwidth
 
-- a: 24.7 MiB/s
-- b: 24.8 MiB/s
-- c: 25.0 MiB/s
-- d: 25.3 MiB/s
-- host load average: 13.07, 6.75, 4.05
+[cols="1,1"]
+|===
+|Node | Bandwidth
+
+|a
+|24.7 MiB/s
+
+|b
+|24.8 MiB/s
+
+|c
+|25.0 MiB/s
+
+|d
+|25.3 MiB/s
+|===
+
+host load average: 13.07, 6.75, 4.05
 
 512 block bandwidth 
 
-- a: 3240 KiB/s
-- b: 3235 KiB/s
-- c: 3243 KiB/s
-- d: 3241 KiB/s
-- host load average: 11.30, 5.73, 3.27
+[cols="1,1"]
+|===
+|Node | Bandwidth
+
+|a
+|3240 KiB/s
+
+|b
+|3235 KiB/s
+
+|c
+|3243 KiB/s
+
+|d
+|3241 KiB/s
+|===
+
+host load average: 11.30, 5.73, 3.27
